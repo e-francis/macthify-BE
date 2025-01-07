@@ -29,12 +29,12 @@ app.get("/api/health", (req, res) => {
 });
 
 // Apply rate limiters to specific routes
-app.use("/api/auth/login", loginLimiter);
-app.use("/api/profile", profileLimiter);
+app.use("/v1/api/auth/login", loginLimiter);
+app.use("/v1/api/create-profile", profileLimiter);
 
 // Routes
-app.use("/api/profile", profileRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/v1/api/create-profile", profileRoutes);
+app.use("/v1/api/auth", authRoutes);
 
 // Handle undefined routes
 app.use("*", (req, res) => {
@@ -68,8 +68,8 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Health check available at: http://localhost:${PORT}/api/health`);
   console.log(`API endpoints:`);
-  console.log(`- POST http://localhost:${PORT}/api/auth/login`);
-  console.log(`- POST http://localhost:${PORT}/api/profile`);
+  console.log(`- POST http://localhost:${PORT}/v1/api/auth/login`);
+  console.log(`- POST http://localhost:${PORT}/v1/api/create-profile`);
 });
 
 export default app;

@@ -83,7 +83,7 @@ npm start
 
 ### Create Profile
 ```http
-POST /api/profile
+POST /v1/api/create-profile
 Content-Type: multipart/form-data
 
 Request body:
@@ -109,7 +109,7 @@ Response:
 
 ### Login
 ```http
-POST /api/auth/login
+POST /v1/api/auth/login
 Content-Type: application/json
 
 Request body:
