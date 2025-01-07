@@ -4,8 +4,8 @@ import profileRoutes from "./routes/profileRoutes";
 import authRoutes from "./routes/authRoutes";
 import { logger } from "./config/logger";
 import { configureSecurityMiddleware } from "./middleware/security";
-
 import { db } from "./config/firebase";
+
 console.log("Firebase initialized:", !!db);
 
 dotenv.config();
@@ -61,15 +61,19 @@ app.use(
   }
 );
 
-const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Health check available at: http://localhost:${PORT}/api/health`);
-  console.log(`API endpoints:`);
-  console.log(`- POST http://localhost:${PORT}/v1/api/auth/login`);
-  console.log(`- POST http://localhost:${PORT}/v1/api/create-profile`);
-});
+// Start the server only in local development
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () => {
+    logger.info(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
+    console.log(
+      `Health check available at: http://localhost:${PORT}/api/health`
+    );
+    console.log(`API endpoints:`);
+    console.log(`- POST http://localhost:${PORT}/v1/api/auth/login`);
+    console.log(`- POST http://localhost:${PORT}/v1/api/create-profile`);
+  });
+}
 
 export default app;
