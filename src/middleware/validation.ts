@@ -201,7 +201,7 @@ export const validateProfileData = (
             if (field === "passcode") {
               const passcodeNum: number = Number(value);
               if (isNaN(passcodeNum)) {
-                validationErrors.push("Passcode must be a number");
+                validationErrors.push("Passcode must be 6 digits");
               } else {
                 const passcodeStr: string = passcodeNum.toString();
                 if (passcodeStr.length !== 6) {
