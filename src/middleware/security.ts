@@ -27,7 +27,7 @@ export const configureSecurityMiddleware = (app: Express) => {
   });
 
   const profileLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 hour
+    windowMs: 3 * 60 * 1000, // 1 hour
     max: 3,
     skipFailedRequests: true, // Don't count invalid requests
     handler: (req, res) => {
