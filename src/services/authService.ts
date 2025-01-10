@@ -42,6 +42,15 @@ export class AuthService {
       loginAttempt.reset();
       logger.info(`Successful login for user: ${email}`);
 
+      // Format date of birth to 'Month Day, Year'
+      const formattedDob = user.dob
+        ? new Date(user.dob).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        : null;
+
       return {
         success: true,
         message: "Login successful",
@@ -52,6 +61,7 @@ export class AuthService {
           profilePicture: user.profilePicture,
           location: user.location,
           interests: user.interests,
+          dob: formattedDob,
         },
       };
     } catch (error) {
