@@ -82,7 +82,7 @@ npm start
 
 ### Create Profile
 ```http
-POST /v1/api/create-profile
+POST https://macthify-be.vercel.app/v1/api/create-profile
 Content-Type: multipart/form-data
 
 Request body:
@@ -108,7 +108,7 @@ Response:
 
 ### Login
 ```http
-POST /v1/api/auth/login
+POST https://macthify-be.vercel.app/v1/api/auth/login
 Content-Type: application/json
 
 Request body:
