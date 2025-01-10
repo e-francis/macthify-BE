@@ -1,7 +1,13 @@
 import { LoginAttempt } from "../models/LoginAttempt";
 import { logger } from "../config/logger";
 import bcrypt from "bcrypt";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export class AuthService {
@@ -43,13 +49,22 @@ export class AuthService {
       logger.info(`Successful login for user: ${email}`);
 
       // Format date of birth to 'Month Day, Year'
-      const formattedDob = user.dob
-        ? new Date(user.dob).toLocaleDateString("en-US", {
+      let formattedDob = null;
+      if (user.dob) {
+        if (user.dob instanceof Timestamp) {
+          formattedDob = user.dob.toDate().toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
-          })
-        : null;
+          });
+        } else {
+          formattedDob = new Date(user.dob).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+      }
 
       return {
         success: true,
