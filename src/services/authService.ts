@@ -77,6 +77,7 @@ export class AuthService {
           location: user.location,
           interests: user.interests,
           dob: formattedDob,
+          sex: user.sex,
         },
       };
     } catch (error) {
