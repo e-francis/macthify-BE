@@ -25,8 +25,7 @@ A Node.js/TypeScript backend service for the Matchify dating application with pr
 - Node.js (v18 or higher)
 - npm or yarn
 - Firebase account
-- Google Cloud Platform account (for deployment)
-
+- 
 ## Project Setup
 
 1. Clone the repository
@@ -135,7 +134,7 @@ Response:
 - Interests: Array with maximum 5 items
 - Sex: Must be 'male', 'female', or 'other'
 - Email: Valid email format
-- Passcode: Minimum 6 characters
+- Passcode: 6 characters
 - Profile Picture: Required, max 5MB
 
 ### Login
@@ -143,37 +142,6 @@ Response:
 - Passcode: String, minimum 6 characters
 - Maximum 3 login attempts before account lock
 
-## Google Cloud Platform Deployment
-
-1. Install Google Cloud SDK
-```bash
-# Follow installation instructions for your OS:
-# https://cloud.google.com/sdk/docs/install
-```
-
-2. Initialize GCP project
-```bash
-gcloud init
-```
-
-3. Enable required APIs
-```bash
-gcloud services enable cloudbuild.googleapis.com
-gcloud services enable run.googleapis.com
-```
-
-4. Build and deploy to Cloud Run
-```bash
-# Build the container
-gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/matchify-backend
-
-# Deploy the container
-gcloud run deploy matchify-backend \
-  --image gcr.io/YOUR_PROJECT_ID/matchify-backend \
-  --platform managed \
-  --region your-preferred-region \
-  --allow-unauthenticated
-```
 
 ## Error Handling
 
@@ -185,6 +153,7 @@ The API returns structured error responses in the following format:
   "errors": ["Array of specific error messages"]
 }
 ```
+Logging was also added for debugging and to verify the requests endpoints receive
 
 ## Security Considerations
 
