@@ -23,6 +23,7 @@ export class ProfileController {
         success: true,
         message: "Profile created successfully",
         profileId,
+        
       });
     } catch (error: any) {
       logger.error("Profile creation error:", error);
