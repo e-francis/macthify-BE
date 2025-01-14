@@ -184,19 +184,23 @@ export const validateProfileData = (
                 );
               } else {
                 const date: Date = new Date(value);
-                const age: number = calculateAge(date);
-                if (age < 18) {
-                  validationErrors.push("User must be 18 or older");
-                }
+
+                // Check if the date is in the future
                 if (date > new Date()) {
                   validationErrors.push(
                     "Date of birth cannot be in the future"
                   );
+                } else {
+                  // Only check age if the date is not in the future
+                  const age: number = calculateAge(date);
+                  if (age < 18) {
+                    validationErrors.push("User must be 18 or older");
+                  }
                 }
               }
             }
             break;
-
+          
           case "number":
             if (field === "passcode") {
               const passcodeNum: number = Number(value);
