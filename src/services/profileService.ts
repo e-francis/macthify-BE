@@ -54,18 +54,9 @@ export class ProfileService {
 
       logger.info(`Profile created successfully with ID: ${docRef.id}`);
       return docRef.id;
-    } catch (error: any) {
+    } catch (error) {
       logger.error("Error creating profile:", error);
-
-      // Return user-friendly errors for known issues
-      if (
-        error.message.includes("Invalid image format") ||
-        error.message.includes("Passcode must")
-      ) {
-        throw error; // Propagate as-is
-      }
-
-      throw new Error("Internal Server Error: Please try again later.");
+      throw error;
     }
   }
 
@@ -84,15 +75,8 @@ export class ProfileService {
         "data:image/png;base64,",
         "data:image/gif;base64,",
       ];
-
-      // Validate the image format
       if (!validMimeTypes.some((type) => base64Image.startsWith(type))) {
-        logger.error(
-          `Invalid image format received: ${base64Image.slice(0, 20)}`
-        );
-        throw new Error(
-          "Invalid image format. Supported formats are JPEG, JPG, PNG, or GIF."
-        );
+        throw new Error("Invalid image format. Must be JPEG, JPG, PNG, or GIF");
       }
 
       // Create a unique storage path
@@ -116,12 +100,7 @@ export class ProfileService {
       return downloadUrl;
     } catch (error: any) {
       logger.error("Error uploading profile picture:", error);
-      if (error.message.startsWith("Invalid image format")) {
-        throw error; // User error, propagate it
-      }
-      throw new Error(
-        "Failed to upload profile picture: An unexpected error occurred."
-      );
+      throw new Error("Failed to upload profile picture: " + error.message);
     }
   }
 
@@ -132,8 +111,13 @@ export class ProfileService {
   }
 
   private async findByEmail(email: string): Promise<any> {
-    const q = query(collection(db, "profiles"), where("email", "==", email));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.empty ? null : querySnapshot.docs[0].data();
+    try {
+      const q = query(collection(db, "profiles"), where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+      return querySnapshot.empty ? null : querySnapshot.docs[0].data();
+    } catch (error: any) {
+      logger.error("Error querying profiles by email:", error);
+      throw new Error("Failed to query profiles by email");
+    }
   }
 }
